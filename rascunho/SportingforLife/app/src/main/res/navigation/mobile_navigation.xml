@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_dieta">
+
+    <fragment
+        android:id="@+id/navigation_dieta"
+        android:name="br.com.sportingforlife.ui.dieta.DietaFragment"
+        android:label="@string/title_dieta"
+        tools:layout="@layout/fragment_dieta" />
+
+    <fragment
+        android:id="@+id/navigation_treino"
+        android:name="br.com.sportingforlife.ui.treino.TreinoFragment"
+        android:label="@string/title_treino"
+        tools:layout="@layout/fragment_treino" />
+
+    <fragment
+        android:id="@+id/navigation_perfil"
+        android:name="br.com.sportingforlife.ui.perfil.PerfilFragment"
+        android:label="@string/title_perfil"
+        tools:layout="@layout/fragment_perfil" />
+</navigation>
