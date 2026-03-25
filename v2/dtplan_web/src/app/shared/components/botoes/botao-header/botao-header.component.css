@@ -1,0 +1,40 @@
+.voltar-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.voltar-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Tamanhos */
+.voltar-button.pequeno {
+  padding: 8px 15px;
+  font-size: 0.9rem;
+}
+
+.voltar-button.medio {
+  padding: 12px 20px;
+  font-size: 1rem;
+}
+
+.voltar-button.grande {
+  padding: 15px 25px;
+  font-size: 1.1rem;
+}
+
+/* Efeito de hover dinâmico */
+.voltar-button:hover {
+  background-color: var(--hover-color, #2980b9) !important;
+}

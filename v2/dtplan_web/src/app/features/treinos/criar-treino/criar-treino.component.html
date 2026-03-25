@@ -1,0 +1,79 @@
+<body>
+<main class="cadastro-container">
+  <app-header 
+    [title]="`Crair treino`"
+    [voltar]="true"
+    [caminhoVoltar]="`/treinos`"
+  ></app-header>
+
+  <form [formGroup]="treinoForm" (ngSubmit)="onSubmit()">
+    <!-- Campo Nome do Treino -->
+    <div class="form-group">
+      <label for="nome">Nome do Treino</label>
+      <input type="text" id="nome" formControlName="nome" class="form-control" />
+      @if (treinoForm.get('nome')?.invalid && treinoForm.get('nome')?.touched) {
+        <div class="error">
+          Nome é obrigatório.
+        </div>
+      }
+    </div>
+
+    <!-- Campo Descrição do Treino -->
+    <div class="form-group">
+      <label for="descricao">Descrição do Treino</label>
+      <textarea id="descricao" formControlName="descricao" class="form-control"></textarea>
+      @if (treinoForm.get('descricao')?.invalid && treinoForm.get('descricao')?.touched) {
+        <div class="error">
+          Descrição é obrigatória.
+        </div>
+      }
+    </div>
+
+    <!-- Seção de Seleção de Alunos (apenas para treinadores) -->
+@if (isTreinador) {
+  <div class="form-group">
+    <label for="aluno">Aluno</label>
+    
+    <!-- Select para escolher um aluno -->
+    <select id="aluno" formControlName="aluno" class="form-control" (change)="onAlunoSelect($event)">
+      <option value="">Selecione um aluno</option>
+      @for (aluno of alunosDisponiveis; track aluno.id) {
+        <option [value]="aluno.id" [disabled]="isAlunoSelecionado(aluno)">
+          {{ aluno.nome }}
+        </option>
+      }
+    </select>
+
+    <!-- Lista de alunos selecionados -->
+    <div class="selected-alunos">
+      @if (selectedAlunos) {
+        <div class="selected-aluno">
+          {{ selectedAlunos.id }} - {{ selectedAlunos.nome }}
+          <button type="button" (click)="removeAluno()" class="remove-aluno">×</button>
+        </div>
+      }
+    </div>
+
+    <!-- Mensagem de erro -->
+    @if (treinoForm.get('aluno')?.invalid && treinoForm.get('aluno')?.touched) {
+      <div class="error">
+        Aluno é obrigatório.
+      </div>
+    }
+  </div>
+}
+@else {
+  <!-- Exibe o aluno selecionado (o próprio usuário) -->
+  <div class="form-group">
+    <label for="aluno">Aluno</label>
+    <div class="selected-aluno">
+      {{ usuario.id }} - {{ usuario.nome }}
+    </div>
+  </div>
+}
+
+    <!-- Botão de Cadastrar -->
+    <button type="submit" class="btn btn-primary" [disabled]="treinoForm.invalid">Cadastrar</button>
+  </form>
+</main>
+</body>

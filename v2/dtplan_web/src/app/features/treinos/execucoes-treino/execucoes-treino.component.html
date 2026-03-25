@@ -1,0 +1,241 @@
+<div class="container">
+  <!-- Cabeçalho -->
+  <div class="header">
+    
+    <app-header 
+      [title]="'Histórico ' + ficha.nome"
+      [voltar]="true"
+      [caminhoVoltar]="'/treino/detalhar/' + ficha.treinoId"
+    ></app-header>
+  
+  <app-botao-voltar 
+      texto="Voltar" 
+      hoverColor="#2c3e50" 
+      backgroundColor="#1a2530"
+      [rota]="'/treino/detalhar/' + ficha.treinoId"
+      tamanho="medio"
+    ></app-botao-voltar>
+    <div class="header-content">
+      <h1>{{ ficha.nome }}</h1>
+      <div class="ficha-info">
+        <span>{{ ficha.fichaExercicios.length }} exercícios</span>
+        <button (click)="toggleFilter()" class="btn-filter">
+          <fa-icon [icon]="faFilter"></fa-icon> Filtrar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Painel de filtros -->
+  <div *ngIf="isFilterOpen" class="filter-panel">
+    <div class="filter-group">
+      <label for="dateFilter">Período:</label>
+      <select id="dateFilter" [(ngModel)]="dateFilter">
+        <option value="all">Todas as datas</option>
+        <option value="week">Últimos 7 dias</option>
+        <option value="month">Últimos 30 dias</option>
+        <option value="year">Último ano</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label for="sortOrder">Ordenar por:</label>
+      <select id="sortOrder" [(ngModel)]="sortOrder">
+        <option value="recent">Mais recente</option>
+        <option value="oldest">Mais antiga</option>
+        <option value="duration">Maior duração</option>
+        <option value="progress">Melhor desempenho</option>
+      </select>
+    </div>
+    <button (click)="aplicarFiltros()" class="btn-apply">Aplicar filtros</button>
+  </div>
+
+  <!-- Estatísticas -->
+  <div class="stats-container">
+    <div class="stat-card">
+      <div class="stat-value">{{ totalExecucoes }}</div>
+      <div class="stat-label">Execuções</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ formatarTempo(tempoMedio) }}</div>
+      <div class="stat-label">Tempo médio</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ progressoMedio | number:'1.0-0' }}%</div>
+      <div class="stat-label">Progresso médio</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ frequencia | number:'1.1-1' }}/semana</div>
+      <div class="stat-label">Frequência</div>
+    </div>
+  </div>
+
+  <!-- Destaque da melhor execução -->
+  <div *ngIf="melhorExecucao" class="highlight-card">
+    <div class="highlight-header">
+      <fa-icon [icon]="faChartLine"></fa-icon>
+      <h3>Melhor Execução</h3>
+      <div class="performance-badge">
+        <fa-icon [icon]="faTrophy"></fa-icon>
+        Top Performance
+      </div>
+    </div>
+    <div class="highlight-content">
+      <div class="highlight-info">
+        <div>{{ melhorExecucao.data | date:'dd/MM/yyyy' }}</div>
+        <div>{{ formatarTempo(melhorExecucao.tempoTotal) }}</div>
+        <div class="progress-value">
+          {{ calcularProgresso(melhorExecucao) | number:'1.0-0' }}% concluído
+        </div>
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar"
+             [style.width.%]="calcularProgresso(melhorExecucao)">
+        </div>
+      </div>
+      <div class="highlight-footer">
+        <div class="highlight-metric">
+          <fa-icon [icon]="faFire"></fa-icon>
+          <span>Intensidade: {{ calcularIntensidade(melhorExecucao) | number:'1.0-0' }}%</span>
+        </div>
+        <div class="highlight-metric">
+          <fa-icon [icon]="faDumbbell"></fa-icon>
+          <span>Carga Total: {{ calcularCargaTotal(melhorExecucao) | number:'1.0-0' }} kg</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toggle: Evolução de Cargas -->
+  <div *ngIf="ficha.fichaExercicios.length > 0" class="section-title" (click)="toggleEvolucao()">
+    <div class="section-header">
+      <h3>Evolução de Cargas</h3>
+      <div class="section-subtitle">
+        Variação de peso por exercício ao longo do tempo
+        <fa-icon 
+          [icon]="evolucaoAberta ? faChevronUp : faChevronDown" 
+          class="toggle-icon">
+        </fa-icon>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="evolucaoAberta && ficha.fichaExercicios.length > 0">
+    <div *ngFor="let exercicio of ficha.fichaExercicios" class="weight-evolution">
+      <div class="exercise-header">
+        <div class="exercise-title">
+          <h4>{{ exercicio.exercicio.nome }}</h4>
+          <div class="exercise-muscle">{{ exercicio.exercicio }}</div>
+        </div>
+        <div class="suggested-info">
+          <div class="suggested-weight">
+            Histórico de execuçõioes do treino 
+            <fa-icon [icon]="faLightbulb"></fa-icon>
+            Sugerido: {{ exercicio.carga || 0 }} kg
+          </div>
+          <div class="current-weight" *ngIf="getCurrentWeight(exercicio.exercicio.id) !== null">
+            <fa-icon [icon]="faChartLine"></fa-icon>
+            Atual: {{ getCurrentWeight(exercicio.exercicio.id) }} kg
+          </div>
+        </div>
+      </div>
+      <div class="weight-timeline">
+        <div *ngIf="getWeightHistory(exercicio.exercicio.id).length === 0" class="no-data">
+          Nenhum registro de peso encontrado
+        </div>
+        <div *ngFor="let registro of getWeightHistory(exercicio.exercicio.id)" class="timeline-entry">
+          <div class="timeline-date">{{ registro.data | date:'dd/MM/yyyy' }}</div>
+          <div class="timeline-weight">{{ registro.peso }} kg</div>
+          <div class="timeline-variation"
+               [class.positive]="registro.variation > 0"
+               [class.negative]="registro.variation < 0">
+            {{ registro.variation > 0 ? '+' : '' }}{{ registro.variation }} kg
+          </div>
+        </div>
+      </div>
+      <div class="weight-chart-container">
+        <canvas #weightChart></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toggle: Histórico de Execuções -->
+  <div class="section-title" (click)="toggleHistorico()">
+    <div class="section-header">
+      <div class="section-header-cabecalho">
+        <h3>Histórico</h3>
+        <div class="results-count">{{ filteredExecucoes.length }} resultados</div>
+      </div>
+      <div class="section-subtitle">
+        Histórico de execuções do treino
+        <fa-icon 
+          [icon]="historicoAberto ? faChevronUp : faChevronDown" 
+          class="toggle-icon">
+        </fa-icon>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="historicoAberto">
+    <div *ngIf="isLoading" class="loading">
+      <div class="spinner"></div>
+      Carregando execuções...
+    </div>
+    <div *ngIf="!isLoading && filteredExecucoes.length === 0" class="empty">
+      <fa-icon [icon]="faInbox" size="3x"></fa-icon>
+      <p>Nenhuma execução registrada para esta ficha.</p>
+      <button (click)="voltar()" class="btn-back">Voltar ao treino</button>
+    </div>
+    <div class="execution-list">
+      <div *ngFor="let execucao of filteredExecucoes" class="execucao-card">
+        <button class="close-button"
+                (click)="fecharExecucao(execucao.id, $event)">
+          <fa-icon [icon]="faTimes"></fa-icon>
+        </button>
+        <div class="execution-header">
+          <div class="execution-date">
+            <fa-icon [icon]="faCalendar"></fa-icon>
+            {{ execucao.data | date:'dd/MM/yyyy' }}
+          </div>
+          <div class="execution-time">
+            <fa-icon [icon]="faClock"></fa-icon>
+            {{ execucao.data | date:'HH:mm' }}
+          </div>
+          <div class="execution-duration">
+            <fa-icon [icon]="faStopwatch"></fa-icon>
+            {{ formatarTempo(execucao.tempoTotal) }}
+          </div>
+        </div>
+        <div class="execution-body">
+          <div class="progress-container">
+            <div class="progress-bar"
+                 [style.width.%]="calcularProgresso(execucao)">
+            </div>
+            <div class="progress-text">
+              {{ calcularProgresso(execucao) | number:'1.0-0' }}% concluído
+              ({{ calcularSeriesConcluidas(execucao) }}/{{ calcularSeriesTotais(execucao) }} séries)
+            </div>
+          </div>
+          <div class="exercises-summary">
+            <div *ngFor="let ex of execucao.execucaoExercicios" class="exercise-item">
+              <div class="exercise-name">{{ ex.exercicioNome }}</div>
+              <div class="exercise-progress">
+                <div class="progress-bar">
+                  <div [style.width.%]="getExerciseProgress(ex)"></div>
+                </div>
+                <span>{{ ex.seriesRealizadas }}/{{ getSeriesPrevistas(ex) }} séries</span>
+              </div>
+              <div class="exercise-weight">
+                <fa-icon [icon]="faWeightHanging"></fa-icon>
+                {{ ex.carga }} kg
+                <span *ngIf="getWeightVariation(ex) !== null"
+                      [class.positive]="getWeightVariation(ex) > 0"
+                      [class.negative]="getWeightVariation(ex) < 0"
+                      class="weight-variation">
+                  {{ getWeightVariation(ex) > 0 ? '+' : '' }}{{ getWeightVariation(ex) }} kg
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

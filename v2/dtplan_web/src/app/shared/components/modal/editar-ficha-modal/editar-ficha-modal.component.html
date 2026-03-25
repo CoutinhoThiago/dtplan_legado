@@ -1,0 +1,18 @@
+<div class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Editar Ficha</h2>
+      <button class="modal-close-button" (click)="fecharModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form class="modal-form">
+        <label for="carga">Nome</label>
+        <input type="text" id="nome" [(ngModel)]="ficha.nome" name="nome" required>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-button secondary" (click)="fecharModal()">Cancelar</button>
+      <button class="modal-button primary" (click)="salvarEdicao()">Salvar</button>
+    </div>
+  </div>
+</div>

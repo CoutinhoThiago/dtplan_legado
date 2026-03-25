@@ -1,0 +1,258 @@
+/* Container principal */
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f5f7fa;
+    font-family: 'Arial', sans-serif;
+    min-height: 100vh;
+    padding-top: 80px; /* Espaço para o cabeçalho fixo */
+  }
+  
+  main h1 {
+    font-weight: bold;
+    color: #ffffff;
+    margin: 0;
+    flex-grow: 1;
+  }
+  
+  main button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    margin-left: 0.5rem;
+    transition: background-color 0.3s ease;
+    border-radius: 1rem;
+  }
+  
+  main button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Conteúdo abaixo do cabeçalho */
+  main {
+    margin-top: 100px; /* Ajuste para o espaço do cabeçalho fixo */
+    width: 100%;
+    max-width: 1200px;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+  
+  /* Container para cada ficha */
+  .ficha-container {
+    background: #ffffff;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 100%;
+  }
+  
+  .ficha-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .ficha-container h2 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #2980b9;
+    margin-bottom: 1rem;
+  }
+  
+  /* Lista de exercícios */
+  .exercicio-list {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+  }
+  
+  .exercicio-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease;
+  }
+  
+  .exercicio-list li:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .exercicio-info {
+    flex-grow: 1;
+    text-align: left;
+  }
+  
+  .exercicio-info p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .exercicio-info p strong {
+    color: #333;
+  }
+  
+  .exercicio-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  /* Ícones de ação */
+  .icon-editar,
+  .icon-remover,
+  .icon-adicionar {
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #007bff;
+    transition: color 0.3s ease;
+  }
+  
+  .icon-editar:hover {
+    color: #0056b3;
+  }
+  
+  .icon-remover {
+    color: #dc3545;
+  }
+  
+  .icon-remover:hover {
+    color: #c82333;
+  }
+  
+  .icon-adicionar {
+    font-size: 1.5rem;
+    color: #28a745;
+    margin-top: 1rem;
+  }
+  
+  .icon-adicionar:hover {
+    color: #218838;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .ficha-container {
+      padding: 1rem;
+    }
+  
+    .ficha-container h2 {
+      font-size: 1.1rem;
+    }
+  
+    .exercicio-list li {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .exercicio-actions {
+      margin-top: 0.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    header {
+      font-size: 1.25rem;
+    }
+  
+    .ficha-container {
+      padding: 1rem;
+    }
+  
+    .ficha-container h2 {
+      font-size: 1rem;
+    }
+  
+    .exercicio-list li {
+      padding: 0.75rem;
+    }
+  
+    .exercicio-info p {
+      font-size: 0.8rem;
+    }
+  }
+  /* Cabeçalho da ficha */
+  .ficha-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .ficha-header:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .ficha-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: #2980b9;
+  }
+  
+  /* Ícone de expansão */
+  .icon-expandir {
+    font-size: 1.2rem;
+    color: #007bff;
+    transition: transform 0.3s ease;
+  }
+  
+  .icon-expandir.rotacionado {
+    transform: rotate(180deg);
+  }
+  
+  /* Lista de exercícios */
+  .exercicio-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 1rem;
+  }
+  
+  .exercicio-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease;
+  }
+  
+  .exercicio-list li:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .exercicio-info {
+    flex-grow: 1;
+    text-align: left;
+  }
+  
+  .exercicio-info p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  .exercicio-info p strong {
+    color: #333;
+  }
+  
+  .exercicio-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+  

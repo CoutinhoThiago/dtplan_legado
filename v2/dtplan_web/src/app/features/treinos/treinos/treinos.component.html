@@ -1,0 +1,37 @@
+<body>
+  <app-header [title]="'Treinos'"></app-header>
+
+      <div class="layout">
+        <app-sidebar></app-sidebar>
+        <main>
+          <!-- Toggle para treinadores -->
+          <!--@if (usuario?.tipoUsuario === 'treinador' || usuario?.tipoUsuario === 'ambos') { -->
+          <div class="toggle-item">
+            <label>
+              <div class="toggle-switch">
+                <input type="checkbox" [(ngModel)]="mostrarApenasMeusTreinos" (change)="aplicarFiltro()">
+                <span class="toggle-slider"></span>
+              </div>
+              Mostrar apenas meus treinos
+            </label>
+
+            <button (click)="criarTreino()" >Criar treino</button>
+          </div>
+      
+          <!-- Listagem de treinos -->
+          @if (treinosFiltrados.length > 0) {
+            @for (treino of treinosFiltrados; track treino.id) {
+              <div class="container" (click)="navigateTreino(treino)">
+                <p class="nome">Nome: {{ treino.nome }}</p>
+                <p class="descricao">Descrição: {{ treino.descricao }}</p>
+                <p class="autor">Autor: {{ treino.autor.id }} - {{ treino.autor.nome }}</p>
+                <!--
+                <p class="usuario">Aluno: {{ treino.usuario.id }} - {{ treino.usuario.nome }}</p>
+                -->
+              </div>
+            }
+          } @else {
+            <p class="no-treinos">Nenhum treino encontrado.</p>
+          }
+        </main>
+      </div>

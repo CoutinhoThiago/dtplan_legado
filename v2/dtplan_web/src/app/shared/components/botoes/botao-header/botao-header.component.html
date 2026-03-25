@@ -1,0 +1,10 @@
+<button 
+  (click)="voltar()" 
+  class="voltar-button"
+  [ngClass]="tamanho"
+  [style.backgroundColor]="backgroundColor"
+  [style.--hover-color]="hoverColor"
+  [style.border]="border"
+>
+  <fa-icon [icon]="faArrowLeft"></fa-icon> {{ texto }}
+</button>

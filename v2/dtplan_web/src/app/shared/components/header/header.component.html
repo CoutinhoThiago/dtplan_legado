@@ -1,0 +1,25 @@
+<header>
+    <div class="logo">
+      <h1>{{ title }}</h1>
+    </div>
+    @if(voltar) {
+      <div class="voltar">
+        <app-botao-voltar 
+          texto="Voltar" 
+          hoverColor="rgba(255, 255, 255, 0.1)" 
+          border="1px solid white"
+          backgroundColor="transparent"
+          [rota]=this.caminhoVoltar
+          tamanho="medio"
+        ></app-botao-voltar>
+      </div>
+    }
+    <div class="user-info">
+      <button (click)="logout()">
+        <fa-icon [icon]="faSignOutAlt"></fa-icon> 
+        Logout
+    </button> 
+    </div>
+  </header>
+
+  

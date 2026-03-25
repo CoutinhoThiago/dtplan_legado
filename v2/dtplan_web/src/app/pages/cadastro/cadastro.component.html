@@ -1,0 +1,75 @@
+<form [formGroup]="cadastroForm" (ngSubmit)="submit()">
+  <p>Cadastro</p>
+  <br>
+
+  <!-- Campo de Email -->
+  <label for="email">Email:</label>
+  <input id="email" type="email" placeholder="Email" formControlName="email">
+  @if (cadastroForm.get('email')?.invalid && cadastroForm.get('email')?.touched) {
+    <div>Email inválido.</div>
+  }
+
+  <br>
+
+  <!-- Campo de Senha -->
+  <label for="senha">Senha:</label>
+  <input id="senha" type="password" placeholder="Senha" formControlName="senha">
+  @if (cadastroForm.get('senha')?.invalid && cadastroForm.get('senha')?.touched) {
+    <div>Senha é obrigatória.</div>
+  }
+
+  <br>
+
+  <!-- Campo de Nome -->
+  <label for="nome">Nome:</label>
+  <input id="nome" type="text" placeholder="Nome" formControlName="nome">
+  @if (cadastroForm.get('nome')?.invalid && cadastroForm.get('nome')?.touched) {
+    <div>Nome inválido.</div>
+  }
+
+  <br>
+
+  <!-- Campo de CPF -->
+  <label for="cpf">CPF:</label>
+  <input id="cpf" type="text" placeholder="CPF" formControlName="cpf">
+  @if (cadastroForm.get('cpf')?.invalid && cadastroForm.get('cpf')?.touched) {
+    <div>CPF inválido.</div>
+  }
+
+  <br>
+
+  <!-- Toggles modernos para Treinador e Nutricionista -->
+  <div class="toggle-container">
+    <!-- Toggle Treinador -->
+    <div class="toggle-item">
+      <label>
+        <input type="checkbox" formControlName="isTreinador"> Treinador
+      </label>
+      @if (cadastroForm.get('isTreinador')?.value) {
+        <div class="conditional-field">
+          <label for="cref"></label>
+          <input id="cref" type="text" placeholder="CREF" formControlName="cref">
+        </div>
+      }
+    </div>
+
+    <!-- Toggle Nutricionista -->
+    <div class="toggle-item">
+      <label>
+        <input type="checkbox" formControlName="isNutricionista"> Nutricionista
+      </label>
+      @if (cadastroForm.get('isNutricionista')?.value) {
+        <div class="conditional-field">
+          <label for="crn"></label>
+          <input id="crn" type="text" placeholder="CRN" formControlName="crn">
+        </div>
+      }
+    </div>
+  </div>
+
+  <br><br>
+
+  <!-- Botões de ação -->
+  <button type="submit" [disabled]="cadastroForm.invalid">Criar</button>
+  <button type="button" (click)="login()">Efetuar login</button>
+</form>

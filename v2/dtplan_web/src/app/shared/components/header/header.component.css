@@ -1,0 +1,101 @@
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(135deg, #3498db, #2c3e50);
+  /* background-color: blue; */
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  z-index: 10;
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.logo h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--header-text);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  max-width: 50%;
+  padding: 0.5rem 3rem;
+}
+
+.user-info span {
+  font-size: 1rem;
+  white-space: nowrap;
+  color: var(--header-text);
+}
+
+/* Estilo unificado para os botões */
+header button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  gap: 10px;
+  color: var(--header-button-text);
+  border: 1px solid var(--header-button-border);
+  border-radius: 30px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  white-space: nowrap;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+header button:hover {
+  background-color: var(--header-button-hover-bg);
+  transform: translateY(-2px);
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+  header {
+    padding: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .logo h1 {
+    font-size: 1.25rem;
+  }
+
+  .user-info {
+    gap: 10px;
+    padding: 0.5rem;
+    max-width: 100%;
+    order: 3;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+
+  .user-info span {
+    font-size: 0.9rem;
+  }
+
+  header button {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-info {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}

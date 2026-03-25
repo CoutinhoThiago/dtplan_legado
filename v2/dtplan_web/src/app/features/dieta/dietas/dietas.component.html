@@ -1,0 +1,22 @@
+<body>
+  <app-header [title]="'Dieta'"></app-header>
+  
+    <div class="layout">
+      <app-sidebar></app-sidebar>
+      <main>
+        @if (dietas.length > 0) {
+        @for (dieta of dietas; track dieta.id) {
+        <div class="container" (click)="navigateDieta(dieta)">
+          <p class="nome">{{ dieta.nome }}</p>
+          <p class="descricao">{{ dieta.descricao }}</p>
+          <p class="tipo">{{ dietasTipoMapper.getTipoDieta(dieta.tipo) }}</p>
+          <p class="autor">{{ dieta.autor }}</p>
+          <p class="usuario">{{ dieta.usuario }}</p>
+        </div>
+        }
+        } @else {
+        <p class="no-treinos">Nenhua dieta encontrada.</p>
+        }
+      </main>
+    </div>
+  </body>

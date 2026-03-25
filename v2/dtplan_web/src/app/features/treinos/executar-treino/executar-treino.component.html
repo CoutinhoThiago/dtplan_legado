@@ -1,0 +1,100 @@
+<div class="container">
+  <header class="header">
+    <app-header 
+      [title]="'Execução'" 
+      [voltar]="false"
+      [caminhoVoltar]="'/treino/detalhar/' + fichaId">
+    </app-header>
+  </header>
+
+  <main class="content">
+    <div *ngIf="ficha">
+      <div class="header-actions">
+        <h1>{{ficha.nome}}</h1>
+        <div class="action-buttons">
+          <button (click)="cancelar(ficha.treinoId)" class="btn btn-cancelar">
+            Cancelar Treino
+          </button>
+          <button (click)="finalizarTreino(ficha.treinoId)" class="btn btn-finalizar">
+            Finalizar Treino
+          </button>
+        </div>
+      </div>
+
+      <div class="progresso">
+        Exercício {{exercicioAtualIndex + 1}} de {{exercicios.length}}
+      </div>
+
+      <div class="exercise-container" *ngIf="exercicios[exercicioAtualIndex]">
+        <!-- Seta esquerda para exercício anterior -->
+        <button (click)="exercicioAnterior()" [disabled]="exercicioAtualIndex === 0 || isProcessing" 
+                class="nav-arrow left-arrow">
+          <svg viewBox="0 0 24 24">
+            <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/>
+          </svg>
+        </button>
+
+        <div class="exercise-content">
+          <h2>{{exercicios[exercicioAtualIndex].exercicio.nome}}</h2>
+          
+          <div class="exercise-content-interno">
+            <div class="exercise-image">
+              <div class="image-placeholder">
+                <span>Imagem do Exercício</span>
+              </div>
+            </div>
+
+            <div class="exercise-details">
+              <div class="exercise-info">
+                <div class="series-info">
+                  Séries: {{exercicios[exercicioAtualIndex].seriesConcluidas || 0}}/{{exercicios[exercicioAtualIndex].series}}
+                </div>
+
+                <form [formGroup]="exercicioForm" (ngSubmit)="onFormChange()" class="exercise-form">
+                  <div class="form-group">
+                    <label for="repeticoes">Repetições</label>
+                    <input type="number" id="repeticoes" formControlName="repeticoes" 
+                          (change)="onFormChange()" class="form-control" />
+                    @if (exercicioForm.get('repeticoes')?.invalid && exercicioForm.get('repeticoes')?.touched) {
+                      <div class="error-message">
+                        Número de repetições inválido (mínimo 1)
+                      </div>
+                    }
+                  </div>
+
+                  <div class="form-group">
+                    <label for="carga">Carga (kg)</label>
+                    <input type="number" id="carga" formControlName="carga" 
+                          (change)="onFormChange()" class="form-control" />
+                    @if (exercicioForm.get('carga')?.invalid && exercicioForm.get('carga')?.touched) {
+                      <div class="error-message">
+                        Carga não pode ser negativa
+                      </div>
+                    }
+                  </div>
+                </form>
+
+                <button 
+                  (click)="marcarSerieConcluida(exercicios[exercicioAtualIndex])"
+                  [disabled]="exercicios[exercicioAtualIndex].seriesConcluidas === exercicios[exercicioAtualIndex].series || isProcessing"
+                  [class.btn-loading]="isProcessing"
+                  class="btn-mark-series">
+                  <span class="btn-text">Concluir série</span>
+                  <span class="check-icon">✓</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Seta direita para próximo exercício -->
+        <button (click)="proximoExercicio()" [disabled]="exercicioAtualIndex === exercicios.length - 1 || isProcessing" 
+                class="nav-arrow right-arrow">
+          <svg viewBox="0 0 24 24">
+            <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </main>
+</div>

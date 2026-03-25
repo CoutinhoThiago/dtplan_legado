@@ -1,0 +1,78 @@
+<body>
+  <header>
+    <h1>Editar Perfil</h1>
+    <button class="voltar" (click)="voltarParaPerfil()">Voltar</button>
+  </header>
+
+  <div class="layout">
+    <app-sidebar></app-sidebar>
+    <main>
+      @if (ususarioForm) {
+        <form [formGroup]="ususarioForm" (ngSubmit)="editar()">
+          <!-- Nome -->
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" formControlName="nome" class="form-control" />
+            @if (ususarioForm.get('nome')?.invalid && ususarioForm.get('nome')?.touched) {
+              <div class="error">Nome é obrigatório.</div>
+            }
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" formControlName="email" class="form-control" />
+            @if (ususarioForm.get('email')?.invalid && ususarioForm.get('email')?.touched) {
+              <div class="error">Email é obrigatório.</div>
+            }
+          </div>
+
+          <!-- Data de Nascimento -->
+          <div class="form-group">
+            <label for="dataNascimento">Data de Nascimento</label>
+            <input type="date" id="dataNascimento" formControlName="dataNascimento" class="form-control" />
+            @if (ususarioForm.get('dataNascimento')?.invalid && ususarioForm.get('dataNascimento')?.touched) {
+              <div class="error">Data de Nascimento é obrigatória.</div>
+            }
+          </div>
+
+          <!-- Gênero -->
+          <div class="form-group">
+            <label for="genero">Gênero</label>
+            <select id="genero" formControlName="genero" class="form-control">
+              @for (genero of generos; track genero) {
+                <option [value]="genero">{{ genero }}</option>
+              }
+            </select>
+            @if (ususarioForm.get('genero')?.invalid && ususarioForm.get('genero')?.touched) {
+              <div class="error">Gênero é obrigatório.</div>
+            }
+          </div>
+
+          <!-- Altura -->
+          <div class="form-group">
+            <label for="altura">Altura (cm)</label>
+            <input type="number" id="altura" formControlName="altura" class="form-control" />
+            @if (ususarioForm.get('altura')?.invalid && ususarioForm.get('altura')?.touched) {
+              <div class="error">Altura é obrigatória.</div>
+            }
+          </div>
+
+          <!-- Peso -->
+          <div class="form-group">
+            <label for="pesoAtual">Peso (kg)</label>
+            <input type="number" id="pesoAtual" formControlName="pesoAtual" class="form-control" />
+            @if (ususarioForm.get('pesoAtual')?.invalid && ususarioForm.get('pesoAtual')?.touched) {
+              <div class="error">Peso é obrigatório.</div>
+            }
+          </div>
+
+          <!-- Botão de Salvar -->
+          <button type="submit" class="btn btn-primary" [disabled]="ususarioForm.invalid">Salvar</button>
+        </form>
+      } @else {
+        <p>Carregando formulário...</p>
+      }
+    </main>
+  </div>
+</body>

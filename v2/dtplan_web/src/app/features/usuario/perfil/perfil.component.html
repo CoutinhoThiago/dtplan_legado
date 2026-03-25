@@ -1,0 +1,37 @@
+<body>
+  <app-header [title]="'Perfil'"></app-header>
+  <div class="layout">
+    <app-sidebar></app-sidebar>
+    <main>
+      @if (usuario) {
+      <div class="profile-container">
+        <div class="profile-header">
+          <h2>Informações do Perfil</h2>
+        </div>
+        <div class="profile-info">
+          <p><strong>Nome:</strong> {{ usuario.nome }}</p>
+          <p><strong>Email:</strong> {{ usuario.email }}</p>
+          <p><strong>CPF:</strong> {{ usuario.cpf }}</p>
+          <p><strong>Data de Nascimento:</strong> {{ formatarDataParaExibicao(usuario.dataNascimento) }}</p>
+
+          <br>
+          
+          <p><strong>Altura:</strong> {{ usuario.altura || 'Não informado' }} cm</p>
+          <p><strong>Peso:</strong> {{ usuario.pesoAtual || 'Não informado' }} kg</p>
+          <p><strong>Genero:</strong> {{ generoTipoMapper.getGenero(usuario.genero) || 'Não informado' }} kg</p>
+
+          <br>
+
+          @if (usuario.tipoUsuario == "treinador" || usuario.tipoUsuario == "ambos") {
+            <p><strong>CREF:</strong> {{ usuario.cref || 'Não informado' }}</p>
+          }
+          @if (usuario.tipoUsuario == "nutricionista" || usuario.tipoUsuario == "ambos") {
+            <p><strong>CRN:</strong> {{ usuario.crn || 'Não informado' }}</p>
+          }
+        </div>
+        <button class="editar-perfil" (click)="editarPerfil()">Editar Perfil</button>
+      </div>
+    }
+    </main>
+  </div>
+</body>

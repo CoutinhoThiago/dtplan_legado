@@ -1,0 +1,21 @@
+CREATE TABLE alimento (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    calorias FLOAT,
+    proteina FLOAT,
+    gordura FLOAT,
+    carboidrato FLOAT,
+    fibraAlimentar FLOAT,
+    colesterol BIGINT,
+    ferro BIGINT,
+    calcio BIGINT,
+    sodio BIGINT,
+    magnesio BIGINT,
+    potassio BIGINT,
+    manganes BIGINT,
+    fosforo BIGINT,
+    cobre BIGINT,
+    zinco BIGINT,
+    niacina BIGINT,
+    vitaminaC BIGINT
+);

@@ -1,0 +1,56 @@
+<main>
+    <app-header 
+    [title]="'Dieta'"
+    [voltar]="true"
+    [caminhoVoltar]="'/dietas'"
+  ></app-header>
+
+    @if (dieta) {
+      <button class="editar" (click)="editar(dieta.id)">Editar</button>
+      <button class="excluir" (click)="excluir()">Excluir</button>
+
+      <h1>{{ dieta.nome }}</h1>
+      <p><strong>Descrição:</strong> {{ dieta.descricao }}</p>
+      <p><strong>Autor:</strong> {{ dieta.autor }}</p>
+  
+      @for (refeicao of refeicoes; track refeicao.id) {
+        <div class="ficha-container">
+          <!-- Cabeçalho da ficha com evento de clique -->
+          <div class="ficha-header" (click)="toggleAlimentos(refeicao)">
+            <!-- <h2>{{ refeicao.nome }}</h2> -->
+            <h2>{{ refeicao.descricao }}</h2>
+            <fa-icon
+            [icon]="refeicao.isExpanded ? faChevronUp : faChevronDown"
+            class="icon-expandir"
+            ></fa-icon>
+          </div>
+  
+          <!-- Lista de exercícios (visível apenas se isExpanded for true) -->
+          @if (refeicao.isExpanded) {
+            <ul class="exercicio-list">
+              @for (arefeicaoAlimento of refeicao.refeicaoAlimentos; track arefeicaoAlimento.id) {
+                <li>
+                  <div class="exercicio-info">
+                    <p><strong>Nome:</strong> {{ arefeicaoAlimento.alimento.nome }} </p>
+                    <p><strong>Descrição:</strong> {{ arefeicaoAlimento.alimento.descicao }} </p>
+                    <p><strong>Descrição:</strong> {{ arefeicaoAlimento.quantidade }} </p>
+                  </div>
+                  <div class="exercicio-actions">
+                    <!-- Ícone de editar -->
+                    <fa-icon [icon]="faPencilAlt" class="icon-editar" (click)="editarExercicio(refeicao.id, arefeicaoAlimento.id)"></fa-icon>
+                    <!-- Ícone de remover -->
+                    <fa-icon [icon]="faTimes" class="icon-remover" (click)="excluirExercicio(refeicao.id, arefeicaoAlimento.id)"></fa-icon>
+                  </div>
+                </li>
+              }
+            </ul>
+          }
+  
+          <!-- Ícone de adicionar -->
+          <fa-icon [icon]="faPlus" class="icon-adicionar" (click)="adicionarExercicio(refeicao.id)"></fa-icon>
+        </div>
+      }
+    } @else {
+      <p>Carregando detalhes do treino...</p>
+    }
+  </main>

@@ -1,0 +1,367 @@
+/* treino.component.css */
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f8fafc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+main {
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem 1rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: #64748b;
+  font-size: 1.2rem;
+}
+
+.treino {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background: #ffffff;
+  border-radius: var(--radius);
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.treino-info {
+  flex: 1;
+}
+
+.treino-info p {
+  margin: 12px 0;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.treino-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-left: 20px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn.editar {
+  background-color: #f59e0b;
+  color: #1e293b;
+}
+
+.btn.excluir {
+  background-color: #ef4444;
+  color: white;
+}
+
+.btn.historico {
+  background-color: #64748b;
+  color: white;
+}
+
+.btn.iniciar {
+  background-color: #10b981;
+  color: white;
+}
+
+.btn.salvar-ordem {
+  background-color: #0ea5e9;
+  color: white;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.btn.adicionar-exercicio,
+.btn.adicionar-ficha {
+  background-color: #3b82f6;
+  color: white;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.btn.adicionar-ficha {
+  margin: 30px auto;
+  max-width: 300px;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  margin: 35px 0;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+  border-radius: 14px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  padding: 25px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-card h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.1rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.stat-card p {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1d4ed8;
+}
+
+.ficha-container {
+  background: #ffffff;
+  margin: 30px 0;
+  border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.07);
+  padding: 30px;
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.ficha-container:hover {
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
+
+.ficha-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.ficha-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #2563eb;
+  cursor: pointer;
+  flex-grow: 1;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ficha-header h2::before {
+  content: "•";
+  color: #3b82f6;
+  font-size: 1.8rem;
+}
+
+.ficha-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.icon-group {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-icon {
+  background: #f1f5f9;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: #475569;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.btn-icon:hover {
+  background-color: #e2e8f0;
+  color: #1e293b;
+  transform: scale(1.1);
+}
+
+.exercicio-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 25px;
+}
+
+.exercicio-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8fafc;
+  padding: 20px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.exercicio-list li:hover {
+  background-color: #f1f5f9;
+  transform: translateY(-2px);
+}
+
+.exercicio-info {
+  flex-grow: 1;
+}
+
+.exercise-title {
+  margin: 0 0 12px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.exercise-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-size: 1rem;
+  color: #475569;
+}
+
+.exercise-details span {
+  display: inline-flex;
+  align-items: center;
+  background: #e2e8f0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.exercise-details span::before {
+  content: "◦";
+  color: #3b82f6;
+  font-weight: bold;
+}
+
+.exercicio-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Drag and drop styling */
+.cdk-drag-preview {
+  opacity: 0.8;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transform: rotate(2deg);
+}
+
+.cdk-drag-placeholder {
+  background-color: #dbeafe;
+  border: 2px dashed #3b82f6;
+  opacity: 0.6;
+}
+
+.cdk-drag-animating {
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.exercicio-list.cdk-drop-list-dragging .cdk-drag:not(.cdk-drag-placeholder) {
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .ficha-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .ficha-actions {
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .exercise-details {
+    gap: 12px;
+    flex-direction: column;
+  }
+  
+  .exercicio-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  .exercicio-actions {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .treino-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+  
+  .stats-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .icon-group {
+    margin-top: 10px;
+  }
+  
+  .ficha-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

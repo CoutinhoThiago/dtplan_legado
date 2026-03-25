@@ -1,0 +1,126 @@
+<body>
+<main>
+  <app-header 
+    [title]="treino.nome"
+    [voltar]="true"
+    [caminhoVoltar]="'/treinos'"
+  ></app-header>
+  
+  @if (isLoading) {
+    <div class="loading">
+      <p>Carregando detalhes do treino...</p>
+    </div>
+  } @else {
+    <div class="treino">
+      <div class="treino-info">
+        <p><strong>Descrição:</strong> {{ treino.descricao || 'N/A' }}</p>
+        <p><strong>Autor:</strong> {{ treino.autor.nome }}</p>
+        <!--<p><strong>Criado em:</strong> {{ treino. | date:'dd/MM/yyyy' }}</p>-->
+      </div>
+      
+      @if (isAutor) {
+        <div class="treino-actions">
+          <button class="btn editar" (click)="editarTreino(treino.id)">Editar</button>
+          <button class="btn excluir" (click)="excluir()">Excluir</button>
+        </div>
+      }
+  </div>
+
+    <div class="stats-container">
+      <div class="stat-card">
+        <fa-icon [icon]="faClock" size="2x"></fa-icon>
+        <div class="stat-content">
+          <h3>Última Execução</h3>
+          <p>{{ ultimaExecucao?.dataInicio | date:'dd/MM/yyyy' }}</p>
+        </div>
+      </div>
+      
+      <div class="stat-card">
+        <fa-icon [icon]="faDumbbell" size="2x"></fa-icon>
+        <div class="stat-content">
+          <h3>Total de Execuções</h3>
+          <p>{{ totalExecucoes || 'N/A' }}</p>
+        </div>
+      </div>
+    </div>
+    
+    @for (ficha of fichas; track ficha.id) {
+      <div class="ficha-container">
+        <div class="ficha-header">
+          <h2 (click)="toggleExercicios(ficha)">{{ ficha.nome }}</h2>
+          <div class="ficha-actions">
+            <button class="btn iniciar" (click)="iniciarTreino(ficha.id)">Iniciar</button>
+            <button class="btn historico" (click)="verHistorico(ficha.id)">
+              <fa-icon [icon]="faChartLine"></fa-icon> Histórico
+            </button>
+            
+            <div class="icon-group">
+              @if (isAutor) {
+                <button class="btn-icon" (click)="editarFicha(ficha)" aria-label="Editar ficha">
+                  <fa-icon [icon]="faPencilAlt"></fa-icon>
+                </button>
+                <button class="btn-icon" (click)="excluirFicha(ficha.id)" aria-label="Excluir ficha">
+                  <fa-icon [icon]="faTimes"></fa-icon>
+                </button>
+              }
+              <button class="btn-icon" (click)="toggleExercicios(ficha)" [attr.aria-expanded]="ficha.isExpanded" aria-label="Expandir/recolher">
+                <fa-icon [icon]="ficha.isExpanded ? faChevronUp : faChevronDown"></fa-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      
+        @if (ficha.isExpanded) {
+          <ul cdkDropList (cdkDropListDropped)="drop($event, ficha)" class="exercicio-list">
+            @for (fichaExercicio of ficha.fichaExercicios; track fichaExercicio.id; let i = $index) {
+              <li cdkDrag [cdkDragDisabled]="!isAutor">
+                <div class="exercicio-info">
+                  <p class="exercise-title">{{ i+1 }}. {{ fichaExercicio.exercicio.nome }}</p>
+                  <div class="exercise-details">
+                    <span>Séries: {{ fichaExercicio.series }}</span>
+                    <span>Repetições: {{ fichaExercicio.repeticoes }} min</span>
+                    <span>Carga: {{ fichaExercicio.carga }} kg</span>
+                    <!--
+                    @if (fichaExercicio.exercicio.tipo == 2) {
+                      <span>Duração: {{ fichaExercicio.duracao_minutos }} min</span>
+                    }
+                    -->
+                    <span>Duração: {{ fichaExercicio.duracao_minutos }} min</span>
+                    <span>Intensidade: {{ fichaExercicio.intensidade }}</span>
+                  </div>
+                </div>
+                @if (isAutor) {
+                  <div class="exercicio-actions">
+                    <button class="btn-icon" (click)="editarFichaExercicio(ficha, fichaExercicio.exercicio.id)" aria-label="Editar exercício">
+                      <fa-icon [icon]="faPencilAlt"></fa-icon>
+                    </button>
+                    <button class="btn-icon" (click)="excluirFichaExercicio(ficha, fichaExercicio.exercicio.id)" aria-label="Excluir exercício">
+                      <fa-icon [icon]="faTimes"></fa-icon>
+                    </button>
+                  </div>
+                }
+              </li>
+            }
+          </ul>
+
+          @if (isOrderChanged) {
+            <button class="btn salvar-ordem" (click)="salvarOrdem(ficha)">Salvar Ordem</button>
+          }
+
+          @if (isAutor) {
+            <button class="btn adicionar-exercicio" (click)="adicionarExercicio(ficha)">
+              <fa-icon [icon]="faPlus"></fa-icon> Adicionar Exercício
+            </button>
+          }
+        }
+      </div>
+    }
+
+    @if (isAutor) {
+      <button class="btn adicionar-ficha" (click)="adicionarFicha()">
+        <fa-icon [icon]="faPlus"></fa-icon> Adicionar Ficha
+      </button>
+    }
+  }
+</main>
+</body>
